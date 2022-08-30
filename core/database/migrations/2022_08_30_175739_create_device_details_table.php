@@ -15,7 +15,7 @@ class CreateDeviceDetailsTable extends Migration
     {
         Schema::create('device_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('device_ip');
             $table->text('device_token');
             $table->json('device_detail')->nullable();
