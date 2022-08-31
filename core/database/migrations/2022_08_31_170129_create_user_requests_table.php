@@ -27,7 +27,7 @@ class CreateUserRequestsTable extends Migration
             $table->text('com_address')->nullable();
             $table->string('com_latitude')->nullable();
             $table->string('com_longitude')->nullable();
-            $table->text('com_city')->nullable();
+            $table->string('com_city')->nullable();
             $table->string('com_mobile_no')->nullable();
             $table->unsignedBigInteger('com_response_status');
             $table->timestamps();

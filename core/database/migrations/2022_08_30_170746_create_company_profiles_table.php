@@ -25,11 +25,13 @@ class CreateCompanyProfilesTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->unsignedBigInteger('city_id');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('company_reg_id')->references('id')->on('users');
+            $table->foreign('city_id')->references('city_id')->on('districts');
         });
     }
 
