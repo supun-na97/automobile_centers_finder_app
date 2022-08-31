@@ -31,7 +31,7 @@ class CreateCompanyProfilesTable extends Migration
             $table->softDeletes();
 
             $table->foreign('company_reg_id')->references('id')->on('users');
-            $table->foreign('city_id')->references('city_id')->on('districts');
+            $table->foreign('city_id')->references('city_id')->on('cities');
         });
     }
 
