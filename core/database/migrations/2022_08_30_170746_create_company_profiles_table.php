@@ -15,7 +15,7 @@ class CreateCompanyProfilesTable extends Migration
     {
         Schema::create('company_profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('company_reg_id');
             $table->string('name');
             $table->string('address_1');
             $table->string('address_2');
@@ -25,11 +25,13 @@ class CreateCompanyProfilesTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->unsignedBigInteger('city_id');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('company_id')->references('id')->on('users');
+            $table->foreign('company_reg_id')->references('id')->on('users');
+            $table->foreign('city_id')->references('city_id')->on('cities');
         });
     }
 
