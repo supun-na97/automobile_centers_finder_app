@@ -13,7 +13,7 @@ class ApiController extends Controller
     protected static function errorResponse(string $code, string $message, int $status = 500, array $failures = null): JsonResponse
     {
         $err = [
-            'code' => $code,
+            'code'    => $code,
             'message' => $message,
         ];
 

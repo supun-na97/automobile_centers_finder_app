@@ -9,7 +9,7 @@ class ErrorTransformer extends TransformerAbstract
     public function transform(object $error)
     {
         $ret = [
-            'error' => $error->code,
+            'error'   => $error->code,
             'message' => $error->message,
         ];
 
