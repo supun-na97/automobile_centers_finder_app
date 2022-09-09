@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+  core:
+    platform: linux/amd64
+    build:
+      context: ./devops/docker
+      dockerfile: core/Dockerfile
+    working_dir: /var/www/core
+    volumes:
+      - ./core:/var/www/core
+    ports:
+      - 8000:80
