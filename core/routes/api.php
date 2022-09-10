@@ -34,7 +34,10 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => 'auth:api'
+    'middleware' => 'auth:api',
+    'headers' => [
+        'Accept' => 'application/json',
+    ]
 ], function () {
     // login user related APIs
     Route::get('user/logged_user', 'App\Http\Controllers\Api\Authentication\AuthController@user');
@@ -44,4 +47,11 @@ Route::group([
     // Device Details related APIs
     Route::post('user/device_register', 'App\Http\Controllers\Api\Notification\DeviceController@registerDevice');
     Route::post('user/current_device_details', 'App\Http\Controllers\Api\Notification\DeviceController@getCurrentDeviceDetail');
+
+    // System service related APIs
+    Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest');
+
+    //Admin Related APIs
+    //Company
+    Route::post('company/signup', 'App\Http\Controllers\Api\Admin\Company\CompanyController@createCompany');
 });
