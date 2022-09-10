@@ -17,11 +17,14 @@ class CreateUserRequestsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('customer_id');
             $table->string('cus_name');
-            $table->text('cus_address');
+            $table->text('cus_cl_address')->nullable();
             $table->string('cus_mobile_no');
             $table->string('cus_latitude');
             $table->string('cus_longitude');
             $table->string('cus_city')->nullable();
+            $table->text('message')->nullable();
+            $table->string('vehicle_type')->nullable();
+            $table->string('vehicle_sub_type')->nullable();
             $table->unsignedBigInteger('company_main_id');
             $table->string('com_name');
             $table->text('com_address')->nullable();
@@ -29,7 +32,8 @@ class CreateUserRequestsTable extends Migration
             $table->string('com_longitude')->nullable();
             $table->string('com_city')->nullable();
             $table->string('com_mobile_no')->nullable();
-            $table->integer('com_response_status');
+            $table->integer('com_response_status')->default(8);
+            $table->integer('request_status')->default(6);
             $table->timestamps();
             $table->softDeletes();
 

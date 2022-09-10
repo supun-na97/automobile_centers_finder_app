@@ -14,7 +14,7 @@ class CreateNotificationMessageStatusesTable extends Migration
     public function up()
     {
         Schema::create('notification_message_statuses', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->integer('id');
             $table->string('name');
             $table->timestamps();
         });

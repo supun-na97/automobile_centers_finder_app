@@ -56,6 +56,24 @@ class InsertUserRequestStatusesToUserRequestStatusesTable extends Migration
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
+            [
+                'id'         => 8,
+                'name'       => 'Pending',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id'         => 9,
+                'name'       => 'Sending Failed',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id'         => 10,
+                'name'       => 'Delivered',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
         ];
 
         DB::table('user_request_statuses')
@@ -70,7 +88,7 @@ class InsertUserRequestStatusesToUserRequestStatusesTable extends Migration
     public function down()
     {
         DB::table('user_request_statuses')
-        ->whereIn('id', [1, 2, 3, 4, 5, 6, 7])
+        ->whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
         ->delete();
     }
 }
