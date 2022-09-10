@@ -29,13 +29,12 @@ class CreateUserRequestsTable extends Migration
             $table->string('com_longitude')->nullable();
             $table->string('com_city')->nullable();
             $table->string('com_mobile_no')->nullable();
-            $table->unsignedBigInteger('com_response_status');
+            $table->integer('com_response_status');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('customer_id')->references('id')->on('users');
             $table->foreign('company_main_id')->references('id')->on('company_profiles');
-            $table->foreign('com_response_status')->references('id')->on('user_request_statuses');
         });
     }
 
