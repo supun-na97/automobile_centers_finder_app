@@ -25,7 +25,9 @@ class Company extends Model
         'company_reg_id',
         'latitude',
         'longitude',
-        'city_id'
+        'city_id',
+        'description',
+        'image'
     ];
 
     protected $table = "company_profiles";
