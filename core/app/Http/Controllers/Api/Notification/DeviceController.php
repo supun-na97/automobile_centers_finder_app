@@ -19,7 +19,7 @@ class DeviceController extends ApiController
 
     /**
      * User Device List .
-     * @param userDeviceManagementService $userDeviceManagementService
+     * @param DeviceService $deviceService
      */
     public function __construct(DeviceService $deviceService)
     {
