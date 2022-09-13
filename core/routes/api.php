@@ -51,6 +51,9 @@ Route::group([
     // System service related APIs
     Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest');
 
+    //Company Related APIs
+    Route::post('user/company_details', 'App\Http\Controllers\Api\Company\CompanyController@getCompanies');
+
     //Admin Related APIs
     //Company
     Route::post('company/signup', 'App\Http\Controllers\Api\Admin\Company\CompanyController@createCompany');
