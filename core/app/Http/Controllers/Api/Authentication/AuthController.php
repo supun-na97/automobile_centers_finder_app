@@ -20,17 +20,7 @@ class AuthController extends Controller
             'name'              => 'required|string|max:255',
             'email'             => 'required|string|email|max:255|unique:users',
             'password'          => 'required|string|min:8',
-            'phone_number'      => 'required|min:10|string|between:0,9',
-            'role'              => 'required|integer|between:1,3',
-            //company register validation
-            'address_1'         => 'nullable|max:255|string',
-            'address_2'         => 'nullable|max:255|string',
-            'address_3'         => 'nullable|max:255|string',
-            'address_4'         => 'nullable|max:255|string',
-            'telephone_number'  => 'nullable|string|min:10|max:10',
-            'latitude'          => 'nullable|max:255|string',
-            'longitude'         => 'nullable|max:255|string',
-            'city_id'           => 'nullable|numeric',
+            'phone_number'      => 'required|min:10|max:10|string',
         ]);
 
         if ($validatedData->fails()) {
@@ -45,25 +35,8 @@ class AuthController extends Controller
             'email'        => $request->email,
             'password'     => Hash::make($request->password),
             'phone_number' => $request->phone_number,
-            'role'         => $request->role,
+            'role'         => 1,
         ]);
-
-        if ($user->role == '2') {
-            Company::create([
-                'name'             => $request->name,
-                'telephone_number' => $request->telephone_number ?? NULL,
-                'mobile_number'    => $request->phone_number,
-                'role'             => $request->role,
-                'address_1'        => $request->address_1 ?? NULL,
-                'address_2'        => $request->address_2 ?? NULL,
-                'address_3'        => $request->address_3 ?? NULL,
-                'address_4'        => $request->address_4 ?? NULL,
-                'company_reg_id'   => $user->id,
-                'latitude'         => $request->latitude ?? NULL,
-                'longitude'        => $request->longitude ?? NULL,
-                'city_id'          => $request->city_id,
-            ]);
-        }
 
         //create token
         $token = $user->createToken('auth_token')->plainTextToken;

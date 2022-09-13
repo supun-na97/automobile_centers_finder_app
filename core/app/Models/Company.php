@@ -15,6 +15,7 @@ class Company extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'telephone_number',
         'mobile_number',
@@ -25,7 +26,9 @@ class Company extends Model
         'company_reg_id',
         'latitude',
         'longitude',
-        'city_id'
+        'city_id',
+        'description',
+        'image'
     ];
 
     protected $table = "company_profiles";

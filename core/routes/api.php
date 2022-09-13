@@ -18,6 +18,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('version', function () {
+    return response()->json(['version' => app_version_string()]);
+});
+
 Route::group([
     'prefix' => 'auth',
     'headers' => [
@@ -30,10 +34,27 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => 'auth:api'
+    'middleware' => 'auth:api',
+    'headers' => [
+        'Accept' => 'application/json',
+    ]
 ], function () {
     // login user related APIs
     Route::get('user/logged_user', 'App\Http\Controllers\Api\Authentication\AuthController@user');
     Route::post('user/update', 'App\Http\Controllers\Api\Authentication\AuthController@update');
     Route::get('user/logout', 'App\Http\Controllers\Api\Authentication\AuthController@logout');
+
+    // Device Details related APIs
+    Route::post('user/device_register', 'App\Http\Controllers\Api\Notification\DeviceController@registerDevice');
+    Route::post('user/current_device_details', 'App\Http\Controllers\Api\Notification\DeviceController@getCurrentDeviceDetail');
+
+    // System service related APIs
+    Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest');
+
+    //Company Related APIs
+    Route::post('user/company_details', 'App\Http\Controllers\Api\Company\CompanyController@getCompanies');
+
+    //Admin Related APIs
+    //Company
+    Route::post('company/signup', 'App\Http\Controllers\Api\Admin\Company\CompanyController@createCompany');
 });
