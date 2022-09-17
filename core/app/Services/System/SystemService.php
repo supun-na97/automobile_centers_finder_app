@@ -101,4 +101,42 @@ class SystemService
 
         return $response;
     }
+
+    public function createCompanyResponse($requestId, $companyStatus, $message)
+    {
+        $requestResponse = UserRequest::where('id', $requestId)->update(['com_response_status' => $companyStatus]);
+
+        if ($requestResponse == 1) {
+            $request      = UserRequest::where('id', $requestId)->select('customer_id', 'cus_name', 'com_name')->first();
+            $customerId   = $request['customer_id'];
+            $customerName = $request['cus_name'];
+            $companyName  = $request['com_name'];
+
+            //push notification message details
+            switch ($companyStatus) {
+                case "1":
+                    $content = 'Hi ' . $customerName . '! ' . $companyName . ' is approved your Service request. They will contact you soon.';
+                    break;
+                case "2":
+                    $content = 'Hi ' . $customerName . '! ' . $companyName . ' is busy Right now.';
+                    break;
+                default:
+                    $content = 'Hi ' . $customerName . '! ' . $companyName . ' is not responding this time.';
+            }
+
+            $text    = $message ?? $content;
+
+            //create Notification for company response
+            $this->notificationService->createNotification($customerId, $text, $requestId);
+
+            $response = new Ok("Response successfully");
+        } else {
+            $response = new Err([
+                'code'    => "create_response_failed",
+                'message' => "create response failed"
+            ]);
+        }
+
+        return $response;
+    }
 }

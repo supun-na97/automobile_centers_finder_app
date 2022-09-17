@@ -50,9 +50,14 @@ Route::group([
 
     // System service related APIs
     Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest');
+    Route::post('user/system_response', 'App\Http\Controllers\Api\System\SystemServiceController@companyResponse');
 
     //Company Related APIs
     Route::post('user/company_details', 'App\Http\Controllers\Api\Company\CompanyController@getCompanies');
+
+    //Notification Related APIs
+    Route::get('user/notification_list', 'App\Http\Controllers\Api\Notification\NotificationController@notificationList');
+    Route::post('user/read_notification', 'App\Http\Controllers\Api\Notification\NotificationController@readNotification');
 
     //Admin Related APIs
     //Company
