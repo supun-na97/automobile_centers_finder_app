@@ -20,6 +20,7 @@ class SystemNotification extends Model
         'request_id',
         'attempt',
         'is_read',
+        'role_id',
         'created_at',
         'updated_at'
     ];
