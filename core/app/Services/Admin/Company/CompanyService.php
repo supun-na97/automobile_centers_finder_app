@@ -44,20 +44,4 @@ class CompanyService
 
         return new Ok("Company registration successfully");
     }
-
-    public function createNotificationLog($userId, $content, $notificationId, $status)
-    {
-        $deviceDetail = DeviceDetail::where('user_id', $userId)->select('device_token')->orderBy('id', 'DESC')->first();
-        $deviceToken  = $deviceDetail->device_token ?? NULL;
-
-        $notification                  = new SystemNotificationLog();
-        $notification->user_id         = $userId;
-        $notification->notification_id = $notificationId;
-        $notification->content         = $content;
-        $notification->status          = $status;
-        $notification->shedule_time    = Carbon::now();
-        $notification->attempt         = +1;
-        $notification->device_token    = $deviceToken;
-        $notification->save();
-    }
 }
