@@ -34,4 +34,17 @@ return [
         'domain' => env('MAIL_FROM_ADDRESS')
     ],
 
+    'firebase' => [
+        'id'             => env('APP_ID'),
+        'url'            => env('FIREBASE_URL'),
+        'key'            => env('SERVER_KEY'),
+        'api_key'        => env('APIKEY'),
+        'auth_domain'    => env('AUTH_DOMAIN'),
+        'db_url'         => env('DATABASE_URL'),
+        'project_id'     => env('PROJECT_ID'),
+        'storage_bucket' => env('STORAGE_BUCKET'),
+        'sender_id'      => env('MESSAGING_SENDER_ID'),
+        'measurement_id' => env('MEASUREMENT_ID')
+    ]
+
 ];
