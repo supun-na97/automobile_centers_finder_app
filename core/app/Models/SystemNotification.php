@@ -9,6 +9,9 @@ class SystemNotification extends Model
 {
     use HasFactory;
 
+    const READ   = 1;
+    const UNREAD = 0;
+
     protected $table = "notification_messages";
 
     protected $fillable = [
