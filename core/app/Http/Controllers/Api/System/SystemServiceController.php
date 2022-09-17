@@ -14,8 +14,8 @@ class SystemServiceController extends ApiController
     protected $systemService;
 
     /**
-     * User Device List .
-     * @param userDeviceManagementService $userDeviceManagementService
+     * System -- user request .
+     * @param SystemService $systemService
      */
     public function __construct(SystemService $systemService)
     {
@@ -24,7 +24,6 @@ class SystemServiceController extends ApiController
 
     public function userRequest(SystemServiceRequest $request)
     {
-        dd($request);
         $validatedData = $request->validated();
         $result = $this->systemService->createUserRequest($validatedData);
 
