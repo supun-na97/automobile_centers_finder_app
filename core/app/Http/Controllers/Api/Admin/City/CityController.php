@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\City;
+namespace App\Http\Controllers\Api\Admin\City;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Services\Admin\City\CityService;
