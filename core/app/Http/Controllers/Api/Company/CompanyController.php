@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\Company;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\Company\ChangeStatusRequest;
 use App\Http\Requests\Company\CompanyDetailRequest;
 use App\Services\Company\CompanyService;
+use App\Transformers\CommonTransformer;
 use App\Transformers\Company\CompanyDetailTransformer;
 
 class CompanyController extends ApiController
@@ -27,8 +29,7 @@ class CompanyController extends ApiController
     {
         $validatedData = $request->validated();
         $result        = $this->companyService->getCompanyDetails($validatedData['city_id']);
-
-        $data = $result->unwrap();
+        $data          = $result->unwrap();
 
         return fractal($data, new CompanyDetailTransformer)->respond();
     }

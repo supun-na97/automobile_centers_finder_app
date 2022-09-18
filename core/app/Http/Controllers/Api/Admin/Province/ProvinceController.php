@@ -24,8 +24,8 @@ class ProvinceController extends ApiController
 
     public function province()
     {
-        $result        = $this->provinceService->getProvince();
-        $data          = $result->unwrap();
+        $result = $this->provinceService->getProvince();
+        $data   = $result->unwrap();
 
         return fractal($data, new ProvinceTransformer)->respond();
     }
