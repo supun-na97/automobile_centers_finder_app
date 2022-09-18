@@ -17,6 +17,12 @@ class InsertDistrictsToDistrictsTable extends Migration
     {
         $provinces = [
             [
+                'name'        => 'Kalutara',
+                'province_id' => '1',
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now()
+            ],
+            [
                 'name'        => 'Colombo',
                 'province_id' => '1',
                 'created_at'  => Carbon::now(),
