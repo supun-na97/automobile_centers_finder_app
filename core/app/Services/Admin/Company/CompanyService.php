@@ -2,17 +2,9 @@
 
 namespace App\Services\Admin\Company;
 
-use App\Models\DeviceDetail;
-use App\Models\SystemNotification;
-use App\Models\SystemNotificationLog;
-use App\Models\SystemNotificationStatus;
-use Carbon\Carbon;
 use App\Models\Company;
 use App\Models\User;
-use App\Mail\RegisterMail;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Prewk\Result\Err;
 use Prewk\Result\Ok;
 
 class CompanyService
