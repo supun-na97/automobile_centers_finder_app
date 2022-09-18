@@ -67,4 +67,13 @@ Route::group([
     //Admin Related APIs
     //Company
     Route::post('company/signup', 'App\Http\Controllers\Api\Admin\Company\CompanyController@createCompany');
+
+    //Province
+    Route::get('province', 'App\Http\Controllers\Api\Admin\Province\ProvinceController@province');
+
+    //District
+    Route::get('district', 'App\Http\Controllers\Api\Admin\District\DistrictController@district');
+
+    //City
+    Route::get('city', 'App\Http\Controllers\Api\Admin\City\CityController@city');
 });
