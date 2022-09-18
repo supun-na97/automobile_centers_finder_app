@@ -15,7 +15,7 @@ class InsertDistrictsToDistrictsTable extends Migration
      */
     public function up()
     {
-        $provinces = [
+        $districts = [
             [
                 'name'        => 'Kalutara',
                 'province_id' => '1',
@@ -169,7 +169,7 @@ class InsertDistrictsToDistrictsTable extends Migration
         ];
 
         DB::table('districts')
-            ->insert($provinces);
+            ->insert($districts);
     }
 
     /**
