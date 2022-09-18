@@ -29,9 +29,7 @@ class DeviceController extends ApiController
     public function registerDevice(DeviceRegistrationRequest $request)
     {
         $validatedData = $request->validated();
-
-        //call service
-        $result = $this->deviceService->saveUserDeviceDetails($validatedData);
+        $result        = $this->deviceService->saveUserDeviceDetails($validatedData);  //call service
 
         if ($result->isErr()) {
             $err      = $result->unwrapErr();
@@ -47,9 +45,9 @@ class DeviceController extends ApiController
     public function getCurrentDeviceDetail(DeviceDetailRequest $request)
     {
         $validatedData = $request->validated();
-        $result = $this->deviceService->getCurrentLoggedDeviceDetails($validatedData['user_code']);
+        $result        = $this->deviceService->getCurrentLoggedDeviceDetails($validatedData['user_code']);
+        $data          = $result->unwrap();
 
-        $data = $result->unwrap();
         return fractal($data, new DeviceDetailTransformer)->respond();
     }
 }

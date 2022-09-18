@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Notification;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Notification\ReadNotificationRequest;
 use App\Services\Notification\NotificationService;
+use App\Transformers\CommonTransformer;
 use App\Transformers\Notification\GetNotificationTransformer;
 
 class NotificationController extends ApiController
@@ -34,13 +35,14 @@ class NotificationController extends ApiController
     public function readNotification(ReadNotificationRequest $request)
     {
         $validatedData = $request->validated();
-        $result = $this->notificationService->readNotificationMessage($validatedData['notification_id']);
+        $result        = $this->notificationService->readNotificationMessage($validatedData['notification_id']);
 
         if ($result->isErr()) {
-            $err = $result->unwrapErr();
+            $err      = $result->unwrapErr();
             $response = static::errorResponse($err['code'], $err['message']);
         } else {
-            $response = $result->unwrap();
+            $data     = $result->unwrap();
+            $response = fractal($data, new CommonTransformer)->respond();
         }
 
         return $response;

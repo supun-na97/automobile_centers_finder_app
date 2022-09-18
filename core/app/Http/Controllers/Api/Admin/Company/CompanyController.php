@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin\Company;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Admin\Company\CompanyRegistrationRequest;
 use App\Services\Admin\Company\CompanyService;
+use App\Transformers\CommonTransformer;
 use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends ApiController
@@ -32,13 +33,14 @@ class CompanyController extends ApiController
         if ($validatedData->fails()) {
             return response()->json([
                 'message' => 'Validate Failed',
-                'errors' => $validatedData->errors()
+                'errors'  => $validatedData->errors()
             ]);
         }
 
         $validatedData = $request->validated();
-        $result = $this->companyService->companyRegistration($validatedData);
+        $result        = $this->companyService->companyRegistration($validatedData);
+        $data          = $result->unwrap();
 
-        return $result->unwrap();
+        return fractal($data, new CommonTransformer)->respond();
     }
 }
