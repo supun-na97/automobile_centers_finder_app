@@ -64,9 +64,13 @@ Route::group([
     Route::post('user/rating', 'App\Http\Controllers\Api\RatingAndPopularity\RatingAndPopularityController@rating');
     Route::get('user/get_popularity', 'App\Http\Controllers\Api\RatingAndPopularity\RatingAndPopularityController@getPopularity');
 
+    //Active Status
+    Route::get('user/active_status', 'App\Http\Controllers\Api\ActiveStatus\ActiveStatusController@activeStatus');
+    Route::post('user/change_active_status', 'App\Http\Controllers\Api\ActiveStatus\ActiveStatusController@changeStatus');
+
     //Admin Related APIs
     //Company
-    Route::post('company/signup', 'App\Http\Controllers\Api\Admin\Company\CompanyController@createCompany');
+    Route::post('company/register', 'App\Http\Controllers\Api\Admin\Company\CompanyController@createCompany');
 
     //Province
     Route::get('province', 'App\Http\Controllers\Api\Admin\Province\ProvinceController@province');
