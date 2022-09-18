@@ -24,8 +24,8 @@ class DistrictController extends ApiController
 
     public function district()
     {
-        $result        = $this->districtService->getDistrict();
-        $data          = $result->unwrap();
+        $result = $this->districtService->getDistrict();
+        $data   = $result->unwrap();
 
         return fractal($data, new DistrictTransformer)->respond();
     }

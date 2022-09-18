@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Authentication;
 
 use App\Http\Controllers\Controller;
 use App\Mail\RegisterMail;
+use App\Models\ActiveStatus;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -60,7 +61,16 @@ class AuthController extends Controller
                 return response()->json(['message' => 'Invalid login details'], 401);
             }
 
-            $user = User::where('email', $request['email'])->firstOrFail();
+            $user   = User::where('email', $request['email'])->firstOrFail();
+            $userId = $user->id;
+
+            //current status change to active
+            if ($user->role == 2) {
+                User::where('id', $userId)->update(['current_status' => ActiveStatus::ACTIVE]);
+                Company::where('company_reg_id', $userId)->update(['current_status' => ActiveStatus::ACTIVE]);
+            } else {
+                User::where('id', $userId)->update(['current_status' => ActiveStatus::ACTIVE]);
+            }
 
             //create login token
             $token = $user->createToken('auth_token')->plainTextToken;
@@ -79,11 +89,21 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $response = $request->user()->currentAccessToken()->delete();
+        $userId = $request->user()->id;
+
+        //current status change to offline
+        if ($response == 1 && $request->user()->role == 2) {
+            User::where('id', $userId)->update(['current_status' => ActiveStatus::OFFLINE]);
+            Company::where('company_reg_id', $userId)->update(['current_status' => ActiveStatus::OFFLINE]);
+        } else if ($response == 1) {
+            User::where('id', $userId)->update(['current_status' => ActiveStatus::OFFLINE]);
+        }
 
         return response()->json(['message' => 'Successfully logged out']);
     }
 
+    //get login user details
     public function user(Request $request)
     {
         $user = $request->user();

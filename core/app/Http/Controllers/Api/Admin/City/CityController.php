@@ -24,8 +24,8 @@ class CityController extends ApiController
 
     public function city()
     {
-        $result        = $this->cityService->getCity();
-        $data          = $result->unwrap();
+        $result = $this->cityService->getCity();
+        $data   = $result->unwrap();
 
         return fractal($data, new CityTransformer)->respond();
     }
