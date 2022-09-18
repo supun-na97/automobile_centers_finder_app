@@ -3,8 +3,6 @@
 namespace App\Services\Company;
 
 use App\Models\Company;
-use Carbon\Carbon;
-use Prewk\Result\Err;
 use Prewk\Result\Ok;
 
 class CompanyService
