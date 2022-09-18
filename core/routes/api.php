@@ -59,6 +59,11 @@ Route::group([
     Route::get('user/notification_list', 'App\Http\Controllers\Api\Notification\NotificationController@notificationList');
     Route::post('user/read_notification', 'App\Http\Controllers\Api\Notification\NotificationController@readNotification');
 
+    //Rating and Popularity
+    Route::post('user/popularity', 'App\Http\Controllers\Api\RatingAndPopularity\RatingAndPopularityController@popularity');
+    Route::post('user/rating', 'App\Http\Controllers\Api\RatingAndPopularity\RatingAndPopularityController@rating');
+    Route::get('user/get_popularity', 'App\Http\Controllers\Api\RatingAndPopularity\RatingAndPopularityController@getPopularity');
+
     //Admin Related APIs
     //Company
     Route::post('company/signup', 'App\Http\Controllers\Api\Admin\Company\CompanyController@createCompany');
