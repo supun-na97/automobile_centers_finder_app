@@ -50,7 +50,7 @@ class InsertStatusToActiveStatusesTable extends Migration
     public function down()
     {
         DB::table('active_statuses')
-        ->whereIn('id', [1, 2, 3, 4, 5])
+        ->whereIn('name', ['Active', 'Offline', 'Busy', 'Close'])
         ->delete();
     }
 }
