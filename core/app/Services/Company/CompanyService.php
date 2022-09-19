@@ -16,13 +16,17 @@ class CompanyService
 
         if (!empty($cityId)) {
             $details->where('city_id', $cityId);
-        } else if(!empty($companyId)) {
+        } else if (!empty($companyId)) {
             $details->where('id', $companyId);
-        } else if(!empty($companyName)) {
+        } else if (!empty($companyName)) {
             $details->where('name', $companyName);
         }
 
         $details = $details->get();
+
+        foreach ($details as $item) {
+            $item['image'] = url('storage/images/company/' . $item['image']);
+        }
 
         return new Ok($details);
     }
@@ -83,8 +87,8 @@ class CompanyService
         $userId  = $user->id;
 
         $details = Company::where('company_reg_id', $userId)->first();
+        $details['image'] = url('storage/images/company/' . $details['image']);
 
         return new Ok($details);
-
     }
 }

@@ -20,7 +20,8 @@ class FirebaseService
                 "registration_ids" => $fcmToken,
                 "notification" => [
                     "title" => $title,
-                    "body" => $body,
+                    "body"  => $body,
+                    "icon"  => env('NOTIFICATION_ICON'),
                 ]
             ];
 
