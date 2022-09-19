@@ -46,7 +46,7 @@ Route::group([
 
     //Device Details related APIs
     Route::post('user/device_register', 'App\Http\Controllers\Api\Notification\DeviceController@registerDevice');
-    Route::post('user/current_device_details', 'App\Http\Controllers\Api\Notification\DeviceController@getCurrentDeviceDetail');
+    Route::get('user/current_device_details', 'App\Http\Controllers\Api\Notification\DeviceController@getCurrentDeviceDetail');
 
     //System service related APIs
     Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest');
