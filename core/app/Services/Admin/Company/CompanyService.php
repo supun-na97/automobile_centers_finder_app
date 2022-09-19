@@ -58,7 +58,7 @@ class CompanyService
     {
         $companies = Company::where('is_active', '=', 1)->get();
 
-        foreach($companies as $item) {
+        foreach ($companies as $item) {
             $item['image'] = url('storage/images/company/' . $item['image']);
         }
 
