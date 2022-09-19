@@ -180,7 +180,10 @@ class InsertDistrictsToDistrictsTable extends Migration
     public function down()
     {
         DB::table('districts')
-            ->whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25])
-            ->delete();
+        ->whereIn('name', [
+            'Kalutara', 'Colombo', 'Gampaha', 'Kandy', 'Matale', 'Nuwara Eliya', 'Ampara',
+            'Batticaloa', 'Trincomalee', 'Anuradhapura', 'Polonnaruwa', 'Jaffna', 'Kilinochchi', 'Mannar', 'Mullaitivu',
+            'Vavuniya', 'Kurunegala', 'Puttalam', 'Kegalle', 'Ratnapura', 'Galle', 'Hambantota', 'Matara', 'Badulla', 'Moneragala'
+        ])->delete();
     }
 }

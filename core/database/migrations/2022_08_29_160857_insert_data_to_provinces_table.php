@@ -73,7 +73,9 @@ class InsertDataToProvincesTable extends Migration
     public function down()
     {
         DB::table('provinces')
-            ->whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])
-            ->delete();
+        ->whereIn('name', [
+            'Western', 'Central', 'East', 'Northcentral', 'North', 'Northwest', 'Sabaragamuwa',
+            'South', 'Uva'
+        ])->delete();
     }
 }

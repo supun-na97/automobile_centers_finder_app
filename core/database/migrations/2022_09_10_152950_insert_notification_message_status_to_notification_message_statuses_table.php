@@ -58,7 +58,7 @@ class InsertNotificationMessageStatusToNotificationMessageStatusesTable extends 
     public function down()
     {
         DB::table('notification_message_statuses')
-        ->whereIn('id', [1, 2, 3, 4, 5])
+        ->whereIn('name', ['Ongoing', 'Sending Failed', 'Delivered', 'Reject', 'Sent'])
         ->delete();
     }
 }

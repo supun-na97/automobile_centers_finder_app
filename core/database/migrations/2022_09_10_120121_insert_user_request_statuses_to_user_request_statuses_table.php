@@ -88,7 +88,9 @@ class InsertUserRequestStatusesToUserRequestStatusesTable extends Migration
     public function down()
     {
         DB::table('user_request_statuses')
-        ->whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-        ->delete();
+        ->whereIn('name', [
+            'Accept', 'Busy', 'Not responding', 'Close', 'Done', 'Ongoing', 'Reject', 'Pending',
+            'Sending Failed', 'Delivered'
+        ])->delete();
     }
 }
