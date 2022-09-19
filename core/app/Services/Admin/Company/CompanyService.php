@@ -36,4 +36,11 @@ class CompanyService
 
         return new Ok("Company registration successfully");
     }
+
+    public function getAllCompanies()
+    {
+        $companies = Company::where('is_active', '=', 1)->get();
+
+        return new Ok($companies);
+    }
 }

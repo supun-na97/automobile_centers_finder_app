@@ -24,7 +24,9 @@ class CompanyDetailRequest extends FormRequest
     public function rules()
     {
         return [
-            'city_id' => ['nullable', 'integer']
+            'city_id'      => ['nullable', 'string'],
+            'company_id'   => ['nullable', 'string'],
+            'company_name' => ['nullable', 'string']
         ];
     }
 }
