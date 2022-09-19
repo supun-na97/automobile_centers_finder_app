@@ -8,6 +8,8 @@ use App\Models\SystemNotificationStatus;
 use App\Models\User;
 use App\Models\UserRequest;
 use App\Services\Notification\NotificationService;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Prewk\Result\Err;
 use Prewk\Result\Ok;
 
@@ -138,5 +140,56 @@ class SystemService
         }
 
         return $response;
+    }
+
+    public function getUserRelatedRequest()
+    {
+        $user    = Auth::user();
+        $userId  = $user->id;
+
+        $details = UserRequest::where('customer_id', $userId)->whereNull('deleted_at')->get();
+
+        return new Ok($details);
+    }
+
+    public function deleteRequest($id)
+    {
+        $user    = Auth::user();
+        $userId  = $user->id;
+
+        $details = UserRequest::where([
+            'id'          => $id,
+            'customer_id' => $userId
+        ])->whereNull('deleted_at')
+        ->update([
+            'deleted_at'  => Carbon::now()
+        ]);
+
+        if ($details == 1) {
+            $response = new Ok("Request deleted");
+        } else {
+            $response = new Err([
+                'code'    => "request_delete_failed",
+                'message' => "Request delete failed"
+            ]);
+        }
+
+        return $response;
+    }
+
+    public function getCompanyRelatedRequest()
+    {
+        $details = [];
+        $user    = Auth::user();
+        $userId  = $user->id;
+
+        $company   = Company::where('company_reg_id', $userId)->whereNull('deleted_at')->first();
+        $companyId = $company['id'];
+
+        if (!empty($company)) {
+            $details = UserRequest::where('company_main_id', $companyId)->whereNull('deleted_at')->get();
+        }
+
+        return new Ok($details);
     }
 }

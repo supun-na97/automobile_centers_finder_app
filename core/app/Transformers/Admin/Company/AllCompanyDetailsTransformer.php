@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Transformers\Company;
+namespace App\Transformers\Admin\Company;
 
 use League\Fractal\TransformerAbstract;
 
-class CompanyDetailTransformer extends TransformerAbstract
+class AllCompanyDetailsTransformer extends TransformerAbstract
 {
     /**
      * A Fractal transformer.

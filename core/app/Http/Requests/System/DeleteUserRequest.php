@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Company;
+namespace App\Http\Requests\System;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CompanyDetailRequest extends FormRequest
+class DeleteUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class CompanyDetailRequest extends FormRequest
     public function rules()
     {
         return [
-            'city_id'      => ['nullable', 'string'],
-            'company_id'   => ['nullable', 'string'],
-            'company_name' => ['nullable', 'string']
+            'request_id' => ['required', 'string']
         ];
     }
 }

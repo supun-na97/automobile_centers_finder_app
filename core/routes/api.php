@@ -39,21 +39,26 @@ Route::group([
         'Accept' => 'application/json',
     ]
 ], function () {
-    // login user related APIs
+    //login user related APIs
     Route::get('user/logged_user', 'App\Http\Controllers\Api\Authentication\AuthController@user');
     Route::post('user/update', 'App\Http\Controllers\Api\Authentication\AuthController@update');
     Route::get('user/logout', 'App\Http\Controllers\Api\Authentication\AuthController@logout');
 
-    // Device Details related APIs
+    //Device Details related APIs
     Route::post('user/device_register', 'App\Http\Controllers\Api\Notification\DeviceController@registerDevice');
     Route::post('user/current_device_details', 'App\Http\Controllers\Api\Notification\DeviceController@getCurrentDeviceDetail');
 
-    // System service related APIs
+    //System service related APIs
     Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest');
     Route::post('user/system_response', 'App\Http\Controllers\Api\System\SystemServiceController@companyResponse');
+    Route::get('user/request', 'App\Http\Controllers\Api\System\SystemServiceController@userRelatedRequest');
+    Route::get('company/request', 'App\Http\Controllers\Api\System\SystemServiceController@companyRelatedRequest');
+    Route::post('user/delete_request', 'App\Http\Controllers\Api\System\SystemServiceController@dropUserRequest');
 
     //Company Related APIs
     Route::post('user/company_details', 'App\Http\Controllers\Api\Company\CompanyController@getCompanies');
+    Route::get('user/login_company_detail', 'App\Http\Controllers\Api\Company\CompanyController@loginCompany');
+    Route::post('user/update_company', 'App\Http\Controllers\Api\Company\CompanyController@updateCompany');
 
     //Notification Related APIs
     Route::get('user/notification_list', 'App\Http\Controllers\Api\Notification\NotificationController@notificationList');
@@ -71,6 +76,7 @@ Route::group([
     //Admin Related APIs
     //Company
     Route::post('company/register', 'App\Http\Controllers\Api\Admin\Company\CompanyController@createCompany');
+    Route::get('company/all_company_details', 'App\Http\Controllers\Api\Admin\Company\CompanyController@getCompanies');
 
     //Province
     Route::get('province', 'App\Http\Controllers\Api\Admin\Province\ProvinceController@province');

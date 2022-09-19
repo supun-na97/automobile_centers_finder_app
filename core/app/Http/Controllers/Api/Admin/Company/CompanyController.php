@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin\Company;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Admin\Company\CompanyRegistrationRequest;
 use App\Services\Admin\Company\CompanyService;
+use App\Transformers\Admin\Company\AllCompanyDetailsTransformer;
 use App\Transformers\CommonTransformer;
 use Illuminate\Support\Facades\Validator;
 
@@ -42,5 +43,13 @@ class CompanyController extends ApiController
         $data          = $result->unwrap();
 
         return fractal($data, new CommonTransformer)->respond();
+    }
+
+    public function getCompanies()
+    {
+        $result = $this->companyService->getAllCompanies();
+        $data   = $result->unwrap();
+
+        return fractal($data, new AllCompanyDetailsTransformer)->respond();
     }
 }
