@@ -54,6 +54,8 @@ Route::group([
 
     //Company Related APIs
     Route::post('user/company_details', 'App\Http\Controllers\Api\Company\CompanyController@getCompanies');
+    Route::get('user/login_company_detail', 'App\Http\Controllers\Api\Company\CompanyController@loginCompany');
+    Route::post('user/update_company', 'App\Http\Controllers\Api\Company\CompanyController@updateCompany');
 
     //Notification Related APIs
     Route::get('user/notification_list', 'App\Http\Controllers\Api\Notification\NotificationController@notificationList');
@@ -71,6 +73,7 @@ Route::group([
     //Admin Related APIs
     //Company
     Route::post('company/register', 'App\Http\Controllers\Api\Admin\Company\CompanyController@createCompany');
+    Route::get('company/all_company_details', 'App\Http\Controllers\Api\Admin\Company\CompanyController@getCompanies');
 
     //Province
     Route::get('province', 'App\Http\Controllers\Api\Admin\Province\ProvinceController@province');
