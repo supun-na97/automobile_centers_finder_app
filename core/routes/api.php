@@ -86,4 +86,9 @@ Route::group([
 
     //City
     Route::get('city', 'App\Http\Controllers\Api\Admin\City\CityController@city');
+
+    //System Reports
+    Route::get('users_usage', 'App\Http\Controllers\Api\Admin\Report\ApplicationController@userAppUsage');
+    Route::get('companies_usage', 'App\Http\Controllers\Api\Admin\Report\ApplicationController@companyAppUsage');
+    Route::get('all_users_request', 'App\Http\Controllers\Api\Admin\Report\ApplicationController@allUserRequest');
 });
