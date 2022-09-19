@@ -24,6 +24,10 @@ class CompanyService
 
         $details = $details->get();
 
+        foreach($details as $item) {
+            $item['image'] = url('storage/images/company/' . $item['image']);
+        }
+
         return new Ok($details);
     }
 
@@ -83,6 +87,7 @@ class CompanyService
         $userId  = $user->id;
 
         $details = Company::where('company_reg_id', $userId)->first();
+        $details['image'] = url('storage/images/company/' . $details['image']);
 
         return new Ok($details);
 
