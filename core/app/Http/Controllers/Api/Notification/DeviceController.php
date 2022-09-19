@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Api\Notification;
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\Notification\DeviceDetailRequest;
 use App\Http\Requests\Notification\DeviceRegistrationRequest;
 use App\Services\Notification\DeviceService;
 use App\Transformers\Notification\DeviceDetailTransformer;
 use App\Transformers\Notification\DeviceRegistrationTransformer;
-use Illuminate\Http\Request;
 
 class DeviceController extends ApiController
 {
@@ -42,11 +40,10 @@ class DeviceController extends ApiController
         return $response;
     }
 
-    public function getCurrentDeviceDetail(DeviceDetailRequest $request)
+    public function getCurrentDeviceDetail()
     {
-        $validatedData = $request->validated();
-        $result        = $this->deviceService->getCurrentLoggedDeviceDetails($validatedData['user_code']);
-        $data          = $result->unwrap();
+        $result = $this->deviceService->getCurrentLoggedDeviceDetails();
+        $data   = $result->unwrap();
 
         return fractal($data, new DeviceDetailTransformer)->respond();
     }

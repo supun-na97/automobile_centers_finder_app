@@ -4,6 +4,7 @@ namespace App\Services\Notification;
 
 use App\Models\DeviceDetail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Prewk\Result\Err;
 use Prewk\Result\Ok;
@@ -72,12 +73,14 @@ class DeviceService
         return $response;
     }
 
-    public function getCurrentLoggedDeviceDetails($userCode)
+    public function getCurrentLoggedDeviceDetails()
     {
-        dd($userCode);
+        $user   = Auth::user();
+        $userId = $user->id;
+
         $isUserDeviceRegistered = DeviceDetail::where(
             [
-                'user_id'   => $userCode,
+                'user_id'   => $userId,
                 'is_active' => 'true'
             ]
         )->get();
