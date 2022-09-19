@@ -39,16 +39,16 @@ Route::group([
         'Accept' => 'application/json',
     ]
 ], function () {
-    // login user related APIs
+    //login user related APIs
     Route::get('user/logged_user', 'App\Http\Controllers\Api\Authentication\AuthController@user');
     Route::post('user/update', 'App\Http\Controllers\Api\Authentication\AuthController@update');
     Route::get('user/logout', 'App\Http\Controllers\Api\Authentication\AuthController@logout');
 
-    // Device Details related APIs
+    //Device Details related APIs
     Route::post('user/device_register', 'App\Http\Controllers\Api\Notification\DeviceController@registerDevice');
     Route::post('user/current_device_details', 'App\Http\Controllers\Api\Notification\DeviceController@getCurrentDeviceDetail');
 
-    // System service related APIs
+    //System service related APIs
     Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest');
     Route::post('user/system_response', 'App\Http\Controllers\Api\System\SystemServiceController@companyResponse');
 
