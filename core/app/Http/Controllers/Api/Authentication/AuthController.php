@@ -117,17 +117,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'             => 'required|string|max:255',
-            'phone_number'     => 'required|min:10|string|between:0,9',
-            'role'             => 'required|integer|between:1,3',
-            //company update validation
-            'address_1'        => 'nullable|max:255|string',
-            'address_2'        => 'nullable|max:255|string',
-            'address_3'        => 'nullable|max:255|string',
-            'address_4'        => 'nullable|max:255|string',
-            'telephone_number' => 'nullable|string|min:10|max:10',
-            'latitude'         => 'nullable|max:255|string',
-            'longitude'        => 'nullable|max:255|string',
-            'city_id'          => 'nullable|integer',
+            'phone_number'     => 'required|min:10|string|between:0,9'
         ]);
 
         if ($validator->fails()) {
@@ -138,28 +128,8 @@ class AuthController extends Controller
 
         $user->update([
             'name'         => $request->name,
-            'phone_number' => $request->phone_number,
-            'role'         => $request->role,
+            'phone_number' => $request->phone_number
         ]);
-
-        if ($user->role == '2') {
-            $query = Company::where('company_reg_id', $user->id)->first();
-
-            Company::where('company_reg_id', $user->id)
-                ->update([
-                    'name'             => $request->name ?? $query->name,
-                    'telephone_number' => $request->telephone_number ?? $query->telephone_number,
-                    'mobile_number'    => $request->phone_number ?? $query->phone_number,
-                    'address_1'        => $request->address_1 ?? $query->address_1,
-                    'address_2'        => $request->address_2 ?? $query->address_2,
-                    'address_3'        => $request->address_3 ?? $query->address_3,
-                    'address_4'        => $request->address_4 ?? $query->address_4,
-                    'company_reg_id'   => $user->id,
-                    'latitude'         => $request->latitude ?? $query->latitude,
-                    'longitude'        => $request->longitude ?? $query->longitude,
-                    'city_id'          => $request->city_id ?? $query->city_id,
-                ]);
-        }
 
         return response()->json(['message' => 'Profile Successfully Updated',], 200);
     }
