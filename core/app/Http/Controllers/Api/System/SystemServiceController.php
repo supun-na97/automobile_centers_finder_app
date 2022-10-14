@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\System;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\System\CancelRequest;
 use App\Http\Requests\System\CompanyRequestDetailRequest;
 use App\Http\Requests\System\DeleteUserRequest;
 use App\Http\Requests\System\SystemServiceRequest;
@@ -33,8 +34,7 @@ class SystemServiceController extends ApiController
         $result        = $this->systemService->createUserRequest($validatedData);
 
         if ($result->isErr()) {
-            $err      = $result->unwrapErr();
-            $response = static::errorResponse($err['code'], $err['message'], 204);
+            $response = $result->unwrapErr();
         } else {
             $data     = $result->unwrap();
             $response = fractal($data, new CommonTransformer)->respond();
@@ -89,5 +89,13 @@ class SystemServiceController extends ApiController
         $data   = $result->unwrap();
 
         return fractal($data, new CompanyRelatedRequestTransformer)->respond();
+    }
+
+    public function cancelRequest(CancelRequest $request)
+    {
+        $validatedData = $request->validated();
+        $result        = $this->systemService->cancelUserRequest($validatedData['request_id']);
+
+        return $result->unwrap();
     }
 }
