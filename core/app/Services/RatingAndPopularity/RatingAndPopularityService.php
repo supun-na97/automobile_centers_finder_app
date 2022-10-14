@@ -68,6 +68,7 @@ class RatingAndPopularityService
     {
         $user    = Auth::user();
         $userId  = $user->id;
+        $result  = [];
 
         $details = RatingAndPopularity::where('user_id', $userId)->select('company_id')->get();
 
@@ -76,8 +77,6 @@ class RatingAndPopularityService
             $result[]       = $companyDetails;
         }
 
-        $collect = array($result);
-
-        return new Ok($collect);
+        return new Ok($result);
     }
 }
