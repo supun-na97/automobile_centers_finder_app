@@ -2,6 +2,7 @@
 
 namespace App\Services\RatingAndPopularity;
 
+use App\Models\Company;
 use App\Models\RatingAndPopularity;
 use Illuminate\Support\Facades\Auth;
 use Prewk\Result\Ok;
@@ -68,8 +69,15 @@ class RatingAndPopularityService
         $user    = Auth::user();
         $userId  = $user->id;
 
-        $details = RatingAndPopularity::where('user_id', $userId)->select('company_id', 'popularity')->get();
+        $details = RatingAndPopularity::where('user_id', $userId)->select('company_id')->get();
 
-        return new Ok($details);
+        foreach ($details as $item) {
+            $companyDetails = Company::where('id', $item->company_id)->first();
+            $result[]       = $companyDetails;
+        }
+
+        $collect = array($result);
+
+        return new Ok($collect);
     }
 }
