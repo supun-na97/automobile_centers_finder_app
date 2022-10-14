@@ -54,6 +54,7 @@ Route::group([
     Route::get('user/request', 'App\Http\Controllers\Api\System\SystemServiceController@userRelatedRequest');
     Route::get('company/request', 'App\Http\Controllers\Api\System\SystemServiceController@companyRelatedRequest');
     Route::post('user/delete_request', 'App\Http\Controllers\Api\System\SystemServiceController@dropUserRequest');
+    Route::post('user/cancel_user_request', 'App\Http\Controllers\Api\System\SystemServiceController@cancelRequest');
 
     //Company Related APIs
     Route::post('user/company_details', 'App\Http\Controllers\Api\Company\CompanyController@getCompanies');
