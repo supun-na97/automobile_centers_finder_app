@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\SystemNotificationStatus;
 use App\Models\User;
 use App\Models\UserRequest;
+use App\Models\UserRequestStatus;
 use App\Services\Notification\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,7 @@ class SystemService
 
     public function createUserRequest($request)
     {
+        $today          = Carbon::now()->format('Y-m-d');
         $customerId     = $request['customer_id'];
         $cusCLAddress   = $request['cus_cl_address'] ?? NULL;
         $cusLatitude    = $request['cus_latitude'];
@@ -41,53 +43,66 @@ class SystemService
         $vehicleSubType = $request['vehicle_sub_type'] ?? NULL;
         $companyId      = $request['company_id'];
 
-        $customerDetails = User::select('name', 'phone_number')->where('id', $customerId)->first();
-        $companyDetails  = Company::where('id', $companyId)->first();
+        $existingRequest = UserRequest::where([
+            'customer_id' => $customerId,
+            'company_main_id' => $companyId
+        ])->whereDate('created_at', $today)
+        ->first();
 
-        if (!is_null($customerDetails) && !is_null($companyDetails)) {
-            $cityDetails    = City::where('city_id', $companyDetails->city_id)->first();
+        if (is_null($existingRequest)) {
+            $customerDetails = User::select('name', 'phone_number')->where('id', $customerId)->first();
+            $companyDetails  = Company::where('id', $companyId)->first();
 
-            $customerName   = $customerDetails->name;
-            $customerTeleNo = $customerDetails->phone_number;
-            $companyName    = $companyDetails->name;
-            $companyAddress = $companyDetails->address_1 . ',' . $companyDetails->address_2 . ',' . $companyDetails->address_3 ?? "";
-            $companyTeleNo  = $companyDetails->mobile_number;
-            $comLatitude    = $companyDetails->latitude;
-            $comLongitude   = $companyDetails->longitude;
-            $comCity        = $cityDetails->name;
+            if (!is_null($customerDetails) && !is_null($companyDetails)) {
+                $cityDetails    = City::where('city_id', $companyDetails->city_id)->first();
 
-            $requestData = UserRequest::create([
-                'customer_id'      => $customerId,
-                'cus_name'         => $customerName,
-                'cus_cl_address'   => $cusCLAddress,
-                'cus_mobile_no'    => $customerTeleNo,
-                'cus_latitude'     => $cusLatitude,
-                'cus_longitude'    => $cusLongitude,
-                'cus_city'         => $cusCity,
-                'message'          => $message,
-                'vehicle_type'     => $vehicleType,
-                'vehicle_sub_type' => $vehicleSubType,
-                'company_main_id'  => $companyId,
-                'com_name'         => $companyName,
-                'com_address'      => $companyAddress,
-                'com_latitude'     => $comLatitude,
-                'com_longitude'    => $comLongitude,
-                'com_city'         => $comCity,
-                'com_mobile_no'    => $companyTeleNo
-            ]);
+                $customerName   = $customerDetails->name;
+                $customerTeleNo = $customerDetails->phone_number;
+                $companyName    = $companyDetails->name;
+                $companyAddress = $companyDetails->address_1 . ',' . $companyDetails->address_2 . ',' . $companyDetails->address_3 ?? "";
+                $companyTeleNo  = $companyDetails->mobile_number;
+                $comLatitude    = $companyDetails->latitude;
+                $comLongitude   = $companyDetails->longitude;
+                $comCity        = $cityDetails->name;
 
-            $requestId = $requestData['id'];
+                $requestData = UserRequest::create([
+                    'customer_id'      => $customerId,
+                    'cus_name'         => $customerName,
+                    'cus_cl_address'   => $cusCLAddress,
+                    'cus_mobile_no'    => $customerTeleNo,
+                    'cus_latitude'     => $cusLatitude,
+                    'cus_longitude'    => $cusLongitude,
+                    'cus_city'         => $cusCity,
+                    'message'          => $message,
+                    'vehicle_type'     => $vehicleType,
+                    'vehicle_sub_type' => $vehicleSubType,
+                    'company_main_id'  => $companyId,
+                    'com_name'         => $companyName,
+                    'com_address'      => $companyAddress,
+                    'com_latitude'     => $comLatitude,
+                    'com_longitude'    => $comLongitude,
+                    'com_city'         => $comCity,
+                    'com_mobile_no'    => $companyTeleNo
+                ]);
 
-            $companyData = Company::where('id', $companyId)->select('company_reg_id')->first();
-            $companyId   = $companyData->company_reg_id;
+                $requestId = $requestData['id'];
 
-            //create Notification for user request
-            $responseData = $this->notificationService->createNotification($companyId, $message, $requestId);
+                $companyData = Company::where('id', $companyId)->select('company_reg_id')->first();
+                $companyId   = $companyData->company_reg_id;
 
-            if ($responseData->isOk()) {
-                UserRequest::where('id', $requestId)->update(['request_status' => SystemNotificationStatus::SENT]);
+                //create Notification for user request
+                $responseData = $this->notificationService->createNotification($companyId, $message, $requestId);
 
-                $response = new Ok("Request successfully created!");
+                if ($responseData->isOk()) {
+                    UserRequest::where('id', $requestId)->update(['request_status' => SystemNotificationStatus::SENT]);
+
+                    $response = new Ok("Request successfully created!");
+                } else {
+                    $response = new Err([
+                        'code'    => 'request_failed',
+                        'message' => 'Request failed'
+                    ]);
+                }
             } else {
                 $response = new Err([
                     'code'    => 'request_failed',
@@ -96,8 +111,8 @@ class SystemService
             }
         } else {
             $response = new Err([
-                'code'    => 'request_failed',
-                'message' => 'Request failed'
+                'code'    => 'request_already_sent',
+                'message' => 'Request already sent'
             ]);
         }
 
@@ -191,5 +206,13 @@ class SystemService
         }
 
         return new Ok($details);
+    }
+
+    public function cancelUserRequest($requestId)
+    {
+        $user = Auth::user();
+        UserRequest::where(['id' => $requestId, 'customer_id' => $user->id])->update(['request_status' => UserRequestStatus::CLOSE]);
+
+        return new Ok("request successfully canceled");
     }
 }
