@@ -104,7 +104,7 @@ class NotificationService
             SystemNotificationStatus::ONGOING,
             SystemNotificationStatus::SENT,
             SystemNotificationStatus::SENDINGFAILED
-        ])->get();
+        ])->orderBy('id', 'desc')->get();
 
         $notification['notification'] = $notification->map(function ($item) {
             return
