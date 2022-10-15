@@ -7,6 +7,7 @@ use App\Http\Requests\System\CancelRequest;
 use App\Http\Requests\System\CompanyRequestDetailRequest;
 use App\Http\Requests\System\DeleteUserRequest;
 use App\Http\Requests\System\SystemServiceRequest;
+use App\Http\Requests\System\UserRequestByIdRequest;
 use App\Services\System\SystemService;
 use App\Transformers\CommonTransformer;
 use App\Transformers\System\CompanyRelatedRequestTransformer;
@@ -95,6 +96,22 @@ class SystemServiceController extends ApiController
     {
         $validatedData = $request->validated();
         $result        = $this->systemService->cancelUserRequest($validatedData['request_id']);
+
+        return $result->unwrap();
+    }
+
+    public function userRequestById(UserRequestByIdRequest $request)
+    {
+        $validatedData = $request->validated();
+        $result        = $this->systemService->getUserRequestById($validatedData['request_id']);
+
+        return $result->unwrap();
+    }
+
+    public function companyResponseById(UserRequestByIdRequest $request)
+    {
+        $validatedData = $request->validated();
+        $result        = $this->systemService->getCompanyResponseById($validatedData['request_id']);
 
         return $result->unwrap();
     }

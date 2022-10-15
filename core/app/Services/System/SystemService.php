@@ -162,7 +162,7 @@ class SystemService
         $user    = Auth::user();
         $userId  = $user->id;
 
-        $details = UserRequest::where('customer_id', $userId)->whereNull('deleted_at')->get();
+        $details = UserRequest::where('customer_id', $userId)->whereNull('deleted_at')->orderBy('id', 'desc')->get();
 
         return new Ok($details);
     }
@@ -202,7 +202,7 @@ class SystemService
         $companyId = $company['id'];
 
         if (!empty($company)) {
-            $details = UserRequest::where('company_main_id', $companyId)->whereNull('deleted_at')->get();
+            $details = UserRequest::where('company_main_id', $companyId)->whereNull('deleted_at')->orderBy('id', 'desc')->get();
         }
 
         return new Ok($details);
@@ -211,8 +211,40 @@ class SystemService
     public function cancelUserRequest($requestId)
     {
         $user = Auth::user();
+        $data = UserRequest::where('customer_id', $user->id)->first();
+        $message = "Service request has been canceled by user";
+
         UserRequest::where(['id' => $requestId, 'customer_id' => $user->id])->update(['request_status' => UserRequestStatus::CLOSE]);
 
+        //create Notification for user request
+        $this->notificationService->createNotification($data['company_main_id'], $message, $requestId);
+
         return new Ok("request successfully canceled");
+    }
+
+    public function getUserRequestById($requestId)
+    {
+        $user    = Auth::user();
+        $userId  = $user->id;
+
+        $details = UserRequest::where(['id' => $requestId, 'customer_id' => $userId])->first();
+
+        return new ok($details);
+    }
+
+    public function getCompanyResponseById($requestId)
+    {
+        $user    = Auth::user();
+        $userId  = $user->id;
+
+        $company = Company::where(['company_reg_id' => $userId, 'is_active' => 1])->first();
+
+        if (!is_null($company)) {
+            $details = UserRequest::where(['id' => $requestId, 'company_main_id' => $company['id']])->first();
+        } else {
+            $details = [];
+        }
+
+        return new ok($details);
     }
 }
