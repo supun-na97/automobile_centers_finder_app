@@ -2,10 +2,13 @@
 
 namespace Tests\Unit;
 
+use App\Services\System\SystemService;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic test example.
      *
@@ -13,6 +16,8 @@ class ExampleTest extends TestCase
      */
     public function test_example()
     {
-        $this->assertTrue(true);
+        $data = (new SystemService())->getUserRelatedRequest();
+        $this->assertEquals(0, $data);
+        // $this->assertTrue(true);
     }
 }

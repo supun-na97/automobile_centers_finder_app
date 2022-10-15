@@ -49,8 +49,8 @@ Route::group([
     Route::get('user/current_device_details', 'App\Http\Controllers\Api\Notification\DeviceController@getCurrentDeviceDetail');
 
     //System service related APIs
-    Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest');
-    Route::post('user/system_response', 'App\Http\Controllers\Api\System\SystemServiceController@companyResponse');
+    Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest')->name('user.request');
+    Route::post('user/system_response', 'App\Http\Controllers\Api\System\SystemServiceController@companyResponse')->name('user.response');
     Route::get('user/request', 'App\Http\Controllers\Api\System\SystemServiceController@userRelatedRequest');
     Route::get('company/request', 'App\Http\Controllers\Api\System\SystemServiceController@companyRelatedRequest');
     Route::post('user/delete_request', 'App\Http\Controllers\Api\System\SystemServiceController@dropUserRequest');
