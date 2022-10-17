@@ -45,26 +45,26 @@ Route::group([
     Route::get('user/logout', 'App\Http\Controllers\Api\Authentication\AuthController@logout');
 
     //Device Details related APIs
-    Route::post('user/device_register', 'App\Http\Controllers\Api\Notification\DeviceController@registerDevice');
+    Route::post('user/device_register', 'App\Http\Controllers\Api\Notification\DeviceController@registerDevice')->name('user.device_register');
     Route::get('user/current_device_details', 'App\Http\Controllers\Api\Notification\DeviceController@getCurrentDeviceDetail');
 
     //System service related APIs
-    Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest');
-    Route::post('user/system_response', 'App\Http\Controllers\Api\System\SystemServiceController@companyResponse');
+    Route::post('user/system_request', 'App\Http\Controllers\Api\System\SystemServiceController@userRequest')->name('user.request');
+    Route::post('user/system_response', 'App\Http\Controllers\Api\System\SystemServiceController@companyResponse')->name('user.response');
     Route::get('user/request', 'App\Http\Controllers\Api\System\SystemServiceController@userRelatedRequest');
-    Route::get('company/request', 'App\Http\Controllers\Api\System\SystemServiceController@companyRelatedRequest');
+    Route::get('company/request', 'App\Http\Controllers\Api\System\SystemServiceController@companyRelatedRequest')->name('company.request');
     Route::post('user/delete_request', 'App\Http\Controllers\Api\System\SystemServiceController@dropUserRequest');
-    Route::post('user/cancel_user_request', 'App\Http\Controllers\Api\System\SystemServiceController@cancelRequest');
     Route::post('user/user_request_by_id', 'App\Http\Controllers\Api\System\SystemServiceController@userRequestById');
     Route::post('user/company_request_by_id', 'App\Http\Controllers\Api\System\SystemServiceController@companyResponseById');
+    Route::post('user/cancel_user_request', 'App\Http\Controllers\Api\System\SystemServiceController@cancelRequest')->name('user.cancel_request');
 
     //Company Related APIs
-    Route::post('user/company_details', 'App\Http\Controllers\Api\Company\CompanyController@getCompanies');
+    Route::post('user/company_details', 'App\Http\Controllers\Api\Company\CompanyController@getCompanies')->name('user.company_details');
     Route::get('user/login_company_detail', 'App\Http\Controllers\Api\Company\CompanyController@loginCompany');
     Route::post('user/update_company', 'App\Http\Controllers\Api\Company\CompanyController@updateCompany');
 
     //Notification Related APIs
-    Route::get('user/notification_list', 'App\Http\Controllers\Api\Notification\NotificationController@notificationList');
+    Route::get('user/notification_list', 'App\Http\Controllers\Api\Notification\NotificationController@notificationList')->name('user.notification_list');
     Route::post('user/read_notification', 'App\Http\Controllers\Api\Notification\NotificationController@readNotification');
 
     //Rating and Popularity
