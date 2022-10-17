@@ -26,7 +26,8 @@ class LoginCompanyDetailTransformer extends TransformerAbstract
             'longitude'        => $result['longitude'],
             'city_id'          => $result['city_id'],
             'description'      => $result['description'],
-            'image'            => $result['image']
+            'image'            => $result['image'],
+            'current_status'   => $result['current_status']
         ];
     }
 }
