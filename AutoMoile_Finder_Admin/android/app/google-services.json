@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "618176559474",
+    "project_id": "push-notification-ec3a7",
+    "storage_bucket": "push-notification-ec3a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618176559474:android:60f1354d0e98994fd345eb",
+        "android_client_info": {
+          "package_name": "com.automobileadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618176559474-cr6g24m5m7pcs7634v952iuuo15v17mc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASpiWavVLlt2XFKO23GyhUJBmy5uiYffQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618176559474-cr6g24m5m7pcs7634v952iuuo15v17mc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618176559474:android:07b9c2d52efaaf4cd345eb",
+        "android_client_info": {
+          "package_name": "com.automoile_finder_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618176559474-cr6g24m5m7pcs7634v952iuuo15v17mc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASpiWavVLlt2XFKO23GyhUJBmy5uiYffQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618176559474-cr6g24m5m7pcs7634v952iuuo15v17mc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
