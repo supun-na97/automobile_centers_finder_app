@@ -13,11 +13,11 @@ class FirebaseService
         ->where('is_active', '=', '1')
         ->select('id', 'user_id', 'device_token')
         ->pluck('device_token')
-        ->all();
+        ->first();
 
         if (!is_null($fcmToken)) {
             $data = [
-                "registration_ids" => $fcmToken,
+                "registration_ids" => [$fcmToken],
                 "notification" => [
                     "title" => $title,
                     "body"  => $body,
@@ -45,6 +45,7 @@ class FirebaseService
             curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedData);
             // Execute post
             $result = curl_exec($ch);
+
             if ($result === FALSE) {
                 die('Curl failed: ' . curl_error($ch));
             }

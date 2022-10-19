@@ -49,11 +49,11 @@ class SystemService
         ])->whereDate('created_at', $today)
         ->first();
 
-        if (is_null($existingRequest)) {
+        if (!empty($existingRequest)) {
             $customerDetails = User::select('name', 'phone_number')->where('id', $customerId)->first();
             $companyDetails  = Company::where('id', $companyId)->first();
 
-            if (!is_null($customerDetails) && !is_null($companyDetails)) {
+            if (!empty($customerDetails) && !empty($companyDetails)) {
                 $cityDetails    = City::where('city_id', $companyDetails->city_id)->first();
 
                 $customerName   = $customerDetails->name;
@@ -212,7 +212,7 @@ class SystemService
     {
         $user = Auth::user();
         $data = UserRequest::where('customer_id', $user->id)->first();
-        $message = "Service request has been canceled by user";
+        $message = "Service request has been canceled by" . $user->name;
 
         UserRequest::where(['id' => $requestId, 'customer_id' => $user->id])->update(['request_status' => UserRequestStatus::CLOSE]);
 
