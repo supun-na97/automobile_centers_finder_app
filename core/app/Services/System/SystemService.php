@@ -45,11 +45,12 @@ class SystemService
 
         $existingRequest = UserRequest::where([
             'customer_id' => $customerId,
-            'company_main_id' => $companyId
+            'company_main_id' => $companyId,
+            'request_status' => UserRequestStatus::CLOSE
         ])->whereDate('created_at', $today)
         ->first();
 
-        if (!empty($existingRequest)) {
+        if (empty($existingRequest)) {
             $customerDetails = User::select('name', 'phone_number')->where('id', $customerId)->first();
             $companyDetails  = Company::where('id', $companyId)->first();
 
